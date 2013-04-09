@@ -25,12 +25,18 @@ class Task (private var taskId:Int, private var name:String, private var deadlin
 	this.status = updStatus
   }
 
-  def getTaskInfo : (Int, String, Day, Int, EmStatus) = { 
-	return (this.taskId, this.name, this.deadline, this.estimate, this.status)
+  def setCategory(updCategory:Category): Unit = { 
+	this.category = updCategory
+  }
+
+  def getTaskInfo : (Int, String, Day, Int, EmStatus, Category) = { 
+	return (this.taskId, this.name, this.deadline, this.estimate, this.status, this.category)
   }
 
   def addTimeBox(timeBox:TimeBox) = { 
 	this.pomodoroHistory += timeBox
   }
+
+  def getPomodoroHistory : List[TimeBox] = this.pomodoroHistory.result
   
 }
