@@ -5,8 +5,9 @@ import scala.collection.mutable._
 import com.myone.pomodoro.domain.EmStatus._
 import com.myone.pomodoro.infra.Day
 
-class Task (private var taskId:Int, private var name:String, private var deadline:Day, private var estimate:Int, private var status:EmStatus, private var category:Category) { 
+class Task (private var taskId:Int, private var name:String, private var deadline:Day, private var estimate:Int, private var status:EmStatus) { 
 
+  private var category:Category = _
   private val pomodoroHistory:ListBuffer[TimeBox] = ListBuffer[TimeBox]()
 
   def changeName(updName:String):Unit = { 
@@ -38,5 +39,17 @@ class Task (private var taskId:Int, private var name:String, private var deadlin
   }
 
   def getPomodoroHistory : List[TimeBox] = this.pomodoroHistory.result
-  
+
+  def isMatchName(name:String) : Boolean = { 
+	val r = name.r
+	this.name match { 
+	  case r() => true
+	  case _ => false
+	}
+  }
+
+  def isMatchTaskId(taskId:Int) : Boolean = { 
+	this.taskId == taskId
+  }
+
 }
