@@ -6,7 +6,7 @@ class BreakMgr {
 
   private val breakHistory:ListBuffer[TimeBox] = ListBuffer[TimeBox]()
 
-  def addBreak(addBrk:TimeBox) = breakHistory += addBrk
+  def addBreak(addBrk:TimeBox): Unit = breakHistory += addBrk
   def getBreakHistory:List[TimeBox] = return breakHistory.result
   
 }

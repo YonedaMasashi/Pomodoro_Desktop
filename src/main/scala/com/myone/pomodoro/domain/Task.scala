@@ -34,13 +34,13 @@ class Task (private var taskId:Int, private var name:String, private var deadlin
 	return (this.taskId, this.name, this.deadline, this.estimate, this.status, this.category)
   }
 
-  def addTimeBox(timeBox:TimeBox) = { 
+  def addTimeBox(timeBox:TimeBox):Unit = { 
 	this.pomodoroHistory += timeBox
   }
 
-  def getPomodoroHistory : List[TimeBox] = this.pomodoroHistory.result
+  def getPomodoroHistory: List[TimeBox] = this.pomodoroHistory.result
 
-  def isMatchName(name:String) : Boolean = { 
+  def isMatchName(name:String): Boolean = { 
 	val r = name.r
 	this.name match { 
 	  case r() => true
@@ -48,7 +48,7 @@ class Task (private var taskId:Int, private var name:String, private var deadlin
 	}
   }
 
-  def isMatchTaskId(taskId:Int) : Boolean = { 
+  def isMatchTaskId(taskId:Int): Boolean = { 
 	this.taskId == taskId
   }
 

@@ -14,6 +14,6 @@ class TimeBox (val startTime:TimePoint, val endTime:TimePoint, val startDay:Day)
 }
 
 object TimeBox { 
-  def apply(startTime:TimePoint, endTime:TimePoint, startDay:Day) = new TimeBox(startTime, endTime, startDay)
+  def apply(startTime:TimePoint, endTime:TimePoint, startDay:Day):TimeBox = new TimeBox(startTime, endTime, startDay)
 }
 
