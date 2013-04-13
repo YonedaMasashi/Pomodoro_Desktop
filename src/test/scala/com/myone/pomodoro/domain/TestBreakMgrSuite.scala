@@ -16,7 +16,7 @@ class TestBreakMgrSuite extends FunSuite with BeforeAndAfter {
   test ("Two Break object add to BreakMgr") { 
 	breakMgr.addBreak((TimeBox(TimePoint(0,10,13,120), TimePoint(0,35,13,120), Day(2013,4,8))))
 	breakMgr.addBreak((TimeBox(TimePoint(0,10,13,120), TimePoint(0,35,13,120), Day(2013,4,9))))
-	val resultBreak = breakMgr.getBreakHistory
+	val resultBreak = breakMgr.breakHistory
 	assert(resultBreak.size === 2)
   }
 }

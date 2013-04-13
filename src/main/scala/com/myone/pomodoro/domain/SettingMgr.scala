@@ -3,19 +3,21 @@ package com.myone.pomodoro.domain
 import scala.collection.mutable._
 
 class SettingMgr { 
-  private var categoryList:ListBuffer[Category] = ListBuffer[Category]()
+  private var _categoryList:ListBuffer[Category] = ListBuffer[Category]()
+  val pomodoroSetting: PomodoroSetting = PomodoroSetting(25, 5)
   
-  def addCategory(category:Category):Unit = this.categoryList += category
+  def addCategory(category:Category):Unit = _categoryList += category
 
-  def getAllCategorys:List[Category] = categoryList.result
+  def categoryList:List[Category] = _categoryList.result
 
-  def findCategory(name:String): Option[Category] = { 
-	val result = categoryList.filter(_.getCategoryName == name)
-	result.isEmpty match { 
-	  case true => None
-	  case _ => Some(result.head)
-	}
+  def findCategory(regParentName:String): List[Category] = { 
+	_categoryList.filter(_.isMatchCategory(regParentName)).result
   }
-}
 
-  
+  def deleteCategory(categoryName:String):Boolean = { 
+	val beforeSize = _categoryList.size
+	_categoryList = _categoryList.filterNot(_.isMatchCategory(categoryName))
+	(beforeSize - 1) == _categoryList.size
+  }
+
+}

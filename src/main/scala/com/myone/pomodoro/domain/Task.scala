@@ -5,40 +5,21 @@ import scala.collection.mutable._
 import com.myone.pomodoro.domain.EmStatus._
 import com.myone.pomodoro.infra.Day
 
-class Task (private var taskId:Int, private var name:String, private var deadline:Day, private var estimate:Int, private var status:EmStatus) { 
+class Task (private var taskId:Int, var name:String, var deadline:Day, var estimate:Int, var status:EmStatus) { 
 
-  private var category:Category = _
-  private val pomodoroHistory:ListBuffer[TimeBox] = ListBuffer[TimeBox]()
+  var parentCategory:Category = _
+  var childCategory:Category = _
+  private val _pomodoroHistory:ListBuffer[TimeBox] = ListBuffer[TimeBox]()
 
-  def changeName(updName:String):Unit = { 
-	this.name = updName
-  }
-
-  def changeDeadline(updDeadline:Day): Unit = { 
-	this.deadline = updDeadline
-  }
-
-  def changeEstimate(updEstimate:Int):Unit = { 
-	this.estimate = updEstimate
-  }
-  
-  def changeStatus(updStatus:EmStatus): Unit = { 
-	this.status = updStatus
-  }
-
-  def setCategory(updCategory:Category): Unit = { 
-	this.category = updCategory
-  }
-
-  def getTaskInfo : (Int, String, Day, Int, EmStatus, Category) = { 
-	return (this.taskId, this.name, this.deadline, this.estimate, this.status, this.category)
+  def taskInfo : (Int, String, Day, Int, EmStatus, Category, Category) = { 
+	return (this.taskId, this.name, this.deadline, this.estimate, this.status, parentCategory, childCategory)
   }
 
   def addTimeBox(timeBox:TimeBox):Unit = { 
-	this.pomodoroHistory += timeBox
+	_pomodoroHistory += timeBox
   }
 
-  def getPomodoroHistory: List[TimeBox] = this.pomodoroHistory.result
+  def pomodoroHistory: List[TimeBox] = _pomodoroHistory.result
 
   def isMatchName(name:String): Boolean = { 
 	val r = name.r

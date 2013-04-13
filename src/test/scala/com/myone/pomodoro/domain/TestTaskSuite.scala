@@ -24,12 +24,12 @@ class TestTaskSuite extends FunSuite with BeforeAndAfter {
   }
   
   test ("Modify Task Object Value") { 
-	task.changeName("Piyo")
-	task.changeDeadline(Day(2013,5,1))
-	task.changeEstimate(5)
-	task.changeStatus(idComplete)
+	task.name = "Piyo"
+	task.deadline = Day(2013,5,1)
+	task.estimate = 5
+	task.status = idComplete
 
-	val taskInfo = task.getTaskInfo
+	val taskInfo = task.taskInfo
 	assert (taskInfo._2 === "Piyo")	
 	assert (taskInfo._3 === Day(2013,5,1))	
 	assert (taskInfo._4 === 5)	
@@ -38,19 +38,21 @@ class TestTaskSuite extends FunSuite with BeforeAndAfter {
 
   test ("Set Category To Task Object") { 
 	val tmpCat = Category("ParentCat")
-	tmpCat.setChildCategory(Category("ChildCat"))
-	task.setCategory(tmpCat)
-	val taskInfo = task.getTaskInfo
-	assert (taskInfo._6.getCategoryName === "ParentCat")
-	assert (taskInfo._6.getChildCategory.getCategoryName === "ChildCat")
+	tmpCat.addChildCategory(Category("ChildCat"))
+	task.parentCategory = tmpCat
+	task.childCategory = tmpCat.childCategories.head
+	val taskInfo = task.taskInfo
+	assert (taskInfo._6.name === "ParentCat")
+	assert (taskInfo._7.name === "ChildCat")
   }
 
   test ("Add three PomodoroTimeBox To Task Object") { 
 	task.addTimeBox(TimeBox(TimePoint(0,10,13,120), TimePoint(0,35,13,120), Day(2013,4,8)))
 	task.addTimeBox(TimeBox(TimePoint(0,12,14,122), TimePoint(0,37,14,122), Day(2013,4,9)))
 	task.addTimeBox(TimeBox(TimePoint(1,11,15,140), TimePoint(1,36,15,140), Day(2013,4,10)))
-	val history = task.getPomodoroHistory
+	val history = task.pomodoroHistory
 	assert (history.size === 3)
   }
 }
+
 

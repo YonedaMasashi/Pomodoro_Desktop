@@ -11,9 +11,9 @@ class TaskMgr {
   
   def deleteTask(taskId:Int):Unit = { taskList.remove(taskId) }
 
-  def getTaskFromTaskId(taskId:Int): Option[Task] = { taskList.get(taskId) }
+  def findTaskFromTaskId(taskId:Int): Option[Task] = { taskList.get(taskId) }
 
-  def getTaskFromName(name:String): List[Task] = { 
+  def findTaskFromName(name:String): List[Task] = { 
 	taskList.filter(t => t._2.isMatchName(name)).values.toList
   }
 

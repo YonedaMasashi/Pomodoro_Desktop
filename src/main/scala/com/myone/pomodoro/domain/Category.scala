@@ -1,13 +1,30 @@
 package com.myone.pomodoro.domain
 
-class Category(private var name:String) { 
-  private var childCategory:Category = null
+import scala.collection.mutable._
 
-  def changeCategoryName(chgName:String):Unit = { this.name = chgName }
-  def getCategoryName : String = this.name
+class Category(var name:String) { 
+  private var _childCategories:ListBuffer[Category] = ListBuffer[Category]()
 
-  def setChildCategory(childCategory:Category):Unit = { this.childCategory = childCategory }
-  def getChildCategory:Category = this.childCategory
+  def addChildCategory(chgChildCategory:Category):Unit = {
+	_childCategories += chgChildCategory
+  }
+
+  def deleteChildCategory(childName:String):Boolean = { 
+	val beforeSize = _childCategories.size
+	_childCategories = _childCategories.filterNot(_.isMatchCategory(childName))
+	(beforeSize - 1) == _childCategories.size
+
+  }
+
+  def childCategories:List[Category] = _childCategories.result
+
+  def isMatchCategory(regStr:String):Boolean = { 
+	val reg = regStr.r
+	this.name match { 
+	  case reg() => true
+	  case _ => false
+	}
+  }
 }
 
 object Category { 
